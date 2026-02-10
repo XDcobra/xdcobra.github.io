@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Voice Lab - Offline Tools</title>
+  <meta name="description" content="Voice Lab - Offline Tools: an on-device speech toolkit for STT, TTS, VAD, diarization, enhancement, and separation.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="logo.ico">
+  <style>
+    :root{
+      --ink:#0e1222;
+      --ink-soft:#2b3348;
+      --muted:#6a738a;
+      --bg:#f6f7fb;
+      --panel:#ffffff;
+      --accent:#5b5bd6;
+      --accent-2:#35c5f5;
+      --accent-3:#7c3aed;
+      --accent-4:#ff9a3e;
+      --shadow:none;
+    }
+    *{box-sizing:border-box}
+    body{
+      font-family:"Sora","Space Grotesk","Avenir Next",sans-serif;
+      margin:0;
+      color:var(--ink);
+      background:var(--bg);
+    }
+    a{color:var(--ink);text-decoration:none}
+    a.cta{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;padding:12px 18px;border-radius:999px;font-weight:600}
+    .container{max-width:1040px;margin:0 auto;padding:0 18px}
+    .hero{
+      padding:72px 0 32px;
+      position:relative;
+      background:#0d1020;
+      color:#f3f5ff;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns:1.2fr 0.8fr;
+      gap:28px;
+      align-items:center;
+    }
+    .badge{
+      display:inline-flex;
+      gap:8px;
+      padding:6px 12px;
+      border-radius:999px;
+      background:rgba(53,197,245,0.18);
+      color:#d9e7ff;
+      font-size:13px;
+      font-weight:600;
+    }
+    h1{font-size:44px;line-height:1.1;margin:14px 0 12px;font-family:"Space Grotesk","Sora",sans-serif}
+    p.lead{font-size:18px;color:var(--muted);margin:0 0 20px}
+    .hero p.lead{color:rgba(233,238,255,0.92)}
+    .chip-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+    .chip{
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,0.1);
+      font-size:13px;
+      font-weight:600;
+      color:#e6edff;
+    }
+    .hero-card{
+      background:#14182b;
+      border-radius:20px;
+      padding:22px;
+      position:relative;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,0.08);
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      margin-bottom:10px;
+    }
+    .brand img{
+      width:64px;
+      height:64px;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,0.15);
+    }
+    .banner{
+      width:100%;
+      border-radius:18px;
+      margin-top:20px;
+      border:1px solid rgba(255,255,255,0.06);
+    }
+    .hero-card h3{margin:0 0 8px;font-size:16px;color:#b8c5e6}
+    .hero-card p{margin:0 0 12px;color:#d6dcf2}
+    section{padding:26px 0}
+    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+    .card{
+      background:var(--panel);
+      border-radius:16px;
+      padding:18px;
+      border:1px solid rgba(14,18,34,0.08);
+      min-height:160px;
+    }
+    .card h3{margin:0 0 8px;font-size:18px}
+    .card p{margin:0;color:var(--muted);line-height:1.55}
+    .accent-bar{
+      height:6px;border-radius:999px;margin-bottom:12px
+    }
+    .accent-1{background:linear-gradient(90deg,var(--accent),#8b8bff)}
+    .accent-2{background:linear-gradient(90deg,var(--accent-2),#8ee8ff)}
+    .accent-3{background:linear-gradient(90deg,var(--accent-3),var(--accent-4))}
+    .split{
+      display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start
+    }
+    .note{
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.08);
+      padding:14px 16px;border-radius:12px;color:var(--ink-soft)
+    }
+    .hero .note{color:rgba(214,220,242,0.96)}
+    footer{padding:28px 0;color:var(--muted);font-size:14px;text-align:center}
+    @media (max-width:860px){
+      .hero-grid{grid-template-columns:1fr}
+      h1{font-size:36px}
+      .split{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="badge">Offline-first speech toolkit</span>
+        <div class="brand">
+          <img src="logo.png" alt="Voice Lab logo">
+          <h1>Voice Lab - Offline Tools</h1>
+        </div>
+        <p class="lead">Explore on-device speech capabilities with STT, TTS, VAD, diarization, enhancement, and separation—designed to run locally and respect privacy.</p>
+        <a class="cta" href="privacy-policy.html">Privacy Policy</a>
+        <div class="chip-row">
+          <div class="chip">Speech-to-Text</div>
+          <div class="chip">Text-to-Speech</div>
+          <div class="chip">Voice Activity Detection</div>
+          <div class="chip">Diarization</div>
+          <div class="chip">Enhancement</div>
+          <div class="chip">Separation</div>
+        </div>
+      </div>
+      <div class="hero-card">
+        <h3>Why Voice Lab?</h3>
+        <p>Voice Lab - Offline Tools is a compact playground for speech pipelines. Load local models, run them on-device, and compare results across tasks—no account required.</p>
+        <div class="note">Built on open source speech tooling. The app highlights how on-device pipelines behave in real-world conditions.</div>
+        <img class="banner" src="banner.png" alt="Voice Lab banner">
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section>
+      <h2>Core modules</h2>
+      <div class="cards">
+        <div class="card">
+          <div class="accent-bar accent-1"></div>
+          <h3>Speech-to-Text</h3>
+          <p>Transcribe speech locally with configurable models and decoding settings.</p>
+        </div>
+        <div class="card">
+          <div class="accent-bar accent-2"></div>
+          <h3>Text-to-Speech</h3>
+          <p>Generate speech from text with voice presets and offline synthesis.</p>
+        </div>
+        <div class="card">
+          <div class="accent-bar accent-3"></div>
+          <h3>VAD & Diarization</h3>
+          <p>Detect speech segments and identify speaker turns for long recordings.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="split">
+      <div>
+        <h2>Enhancement & separation</h2>
+        <p class="lead">Clean noisy audio and separate overlapping voices using local models.</p>
+        <div class="cards">
+          <div class="card">
+            <div class="accent-bar accent-1"></div>
+            <h3>Enhancement</h3>
+            <p>Reduce background noise and improve speech clarity on-device.</p>
+          </div>
+          <div class="card">
+            <div class="accent-bar accent-2"></div>
+            <h3>Separation</h3>
+            <p>Split mixed speakers into individual tracks for analysis.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h2>Privacy-first</h2>
+        <p class="lead">Voice Lab keeps processing local by design. You control which files and models are used.</p>
+        <div class="note">
+          Ads (if enabled) are served via Google AdMob and follow regional consent requirements. See the privacy policy for details.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">Voice Lab - Offline Tools • <a href="privacy-policy.html">Privacy Policy</a> • Contact: <a href="mailto:xdcobra11@gmail.com">xdcobra11@gmail.com</a></div>
+  </footer>
+</body>
+</html>

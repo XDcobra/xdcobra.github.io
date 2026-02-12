@@ -86,6 +86,7 @@
     </p>
     <ul>
         <li><strong>Audio files or recordings you provide:</strong> Audio is processed on-device for speech tasks such as STT, TTS, VAD, diarization, enhancement, and separation.</li>
+        <li><strong>Model files and metadata:</strong> Downloaded model files, checksums, and local manifest data (e.g. download timestamp, last-used timestamp) are stored locally to manage offline use.</li>
         <li><strong>Model settings and app preferences:</strong> Selected models, decoding parameters, and UI preferences are stored locally.</li>
     </ul>
     <p>
@@ -153,6 +154,10 @@
         <li>Device and network information (e.g. device type, operating system, connection type)</li>
         <li>Download metadata (e.g. file requested, timestamp, size)</li>
     </ul>
+    <p>
+        To verify integrity, the app may compute cryptographic checksums (SHA-256) of downloaded model files on your device. These
+        checksum calculations are performed locally and are not transmitted to our servers.
+    </p>
     <p>
         Downloads are served by GitHub (GitHub, Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA) or its infrastructure
         providers. GitHub may process the data above in accordance with its privacy policy.

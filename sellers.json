@@ -1,0 +1,12 @@
+{
+  "version": "1.0",
+  "sellers": [
+    {
+      "seller_id": "1499223822798581",
+      "name": "xdcobra",
+      "domain": "xdcobra.github.io",
+      "is_confidential": false,
+      "seller_type": "PUBLISHER"
+    }
+  ]
+}

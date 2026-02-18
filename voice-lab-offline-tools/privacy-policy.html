@@ -57,7 +57,7 @@
 </head>
 <body>
     <h1>Privacy Policy</h1>
-    <p class="last-updated">Last updated: 12 February 2026</p>
+    <p class="last-updated">Last updated: 18 February 2026</p>
 
     <h2>1. Controller</h2>
     <p>
@@ -143,7 +143,37 @@
         You can also reset your advertising ID in your device settings.
     </p>
 
-    <h3>3.3 Model downloads from GitHub Releases</h3>
+    <h3>3.3 Crash and error reporting (Firebase Crashlytics)</h3>
+    <p>
+        This app uses Firebase Crashlytics, a service operated by Google, to collect crash reports and non-fatal error reports.
+        This helps us improve the stability of the app and fix bugs, especially in combination with the various speech models and configurations the app supports.
+    </p>
+    <p><strong>Data that may be processed by Crashlytics includes:</strong></p>
+    <ul>
+        <li>Crash and error reports (stack traces, error messages)</li>
+        <li>Device and app information (device model, operating system version, app version, build type)</li>
+        <li>Technical context we attach to reports (e.g. feature in use such as speech-to-text or text-to-speech, model type, truncated file or model paths). We do not attach names, email addresses or other directly identifying information.</li>
+    </ul>
+    <p>
+        <strong>Purposes:</strong> Analysing crashes and errors, improving app stability and fixing defects. The technical context (e.g. model type) helps us identify which configurations or models are affected.
+    </p>
+    <p>
+        <strong>Data sharing:</strong> The data listed above are transmitted to Google (Firebase) as the provider of Crashlytics. Processing is carried out by Google in accordance with its privacy policy.
+    </p>
+    <p>
+        <strong>Legal basis:</strong> We rely on our legitimate interest in ensuring the technical stability and quality of the app (Art. 6(1)(f) GDPR). You may object to this processing by contacting us; we will then review whether we can restrict or discontinue sending crash and error data in your case.
+    </p>
+    <p>
+        <strong>Firebase / Google privacy information:</strong><br>
+        <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener noreferrer">
+            https://firebase.google.com/support/privacy
+        </a><br>
+        <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">
+            https://policies.google.com/privacy
+        </a>
+    </p>
+
+    <h3>3.4 Model downloads from GitHub Releases</h3>
     <p>
         The app lets you download speech models directly from the official sherpa-onnx GitHub Releases page. These downloads are
         initiated by you and stored locally on your device so the models can be used offline.
@@ -189,8 +219,11 @@
             <strong>Google AdMob:</strong> As described above, certain data are transmitted to Google in order to serve and measure advertising.
         </li>
         <li>
+            <strong>Google Firebase (Crashlytics):</strong> Crash and error reports together with technical and device information are transmitted to Google as described in section 3.3 (Crash and error reporting).
+        </li>
+        <li>
             <strong>GitHub (model downloads):</strong> When you download models from the official sherpa-onnx GitHub Releases page,
-            your device connects to GitHub servers and transmits data necessary to deliver the files (see section 3.3).
+            your device connects to GitHub servers and transmits data necessary to deliver the files (see section 3.4).
         </li>
         <li>
             <strong>Legal obligations:</strong> Where we are legally obliged to do so, we may disclose data to authorities or other third parties,
@@ -207,6 +240,9 @@
         <li>
             <strong>Data processed by AdMob / Google:</strong> The storage periods for data processed by Google are determined by Google’s policies.
             You can find details in Google’s privacy policy (see link above).
+        </li>
+        <li>
+            <strong>Crash and error reports (Crashlytics):</strong> Crashlytics data are stored and processed by Google in accordance with Firebase's data retention and privacy practices. We use the reports for analysis and bug fixing; we do not retain a separate copy of raw crash data beyond what is available in the Firebase console.
         </li>
         <li>
             <strong>Communication via email:</strong> If you contact us by email, we store your request and the contact details you provide
@@ -227,7 +263,7 @@
     </ul>
     <p>
         To exercise your rights with respect to processing carried out by us, you can contact us at any time using the email address above.
-        You may also exercise your rights regarding data processed by Google AdMob directly vis-à-vis Google.
+        You may also exercise your rights regarding data processed by Google (AdMob, Crashlytics) directly vis-à-vis Google.
     </p>
 
     <h2>8. Data security</h2>
@@ -236,7 +272,7 @@
         This includes, in particular, limiting our own data processing to what is necessary and restricting access to any administrative interfaces.
     </p>
     <p>
-        Data transmitted to third parties such as Google AdMob is sent using encrypted connections (TLS/HTTPS).
+        Data transmitted to third parties such as Google AdMob and Firebase Crashlytics is sent using encrypted connections (TLS/HTTPS).
     </p>
 
     <h2>9. Children</h2>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Offline AI Voice Toolkit - Privacy Policy</title>
+    <title>Voice Lab: STT, TTS &amp; More - Privacy Policy</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -57,7 +57,7 @@
 </head>
 <body>
     <h1>Privacy Policy</h1>
-    <p class="last-updated">Last updated: 24 March 2026</p>
+    <p class="last-updated">Last updated: 6 June 2026</p>
 
     <h2>1. Controller</h2>
     <p>
@@ -69,13 +69,21 @@
 
     <h2>2. Overview</h2>
     <p>
-        Offline AI Voice Toolkit is an on-device speech toolkit for exploring features such as speech-to-text, text-to-speech,
-        voice activity detection, diarization, enhancement, and separation. You can use the app without registration and without
-        creating a user account. This privacy policy explains which data is processed when you use the app and for which purposes.
+        <strong>Voice Lab: STT, TTS &amp; More</strong> (listed on the App Store and Google Play; in-app branding: <strong>VoiceLab</strong>)
+        is an on-device speech toolkit
+        for exploring features such as speech-to-text, text-to-speech, translation, voice cloning, voice activity detection,
+        diarization, enhancement, and separation. You can use the app without registration and without creating a login account.
+        This privacy policy explains which data is processed when you use the app and for which purposes.
     </p>
     <p>
-        The app does not provide an account system or user profiles. We do not assign you a user ID. Third-party advertising SDKs
-        may process device identifiers such as the Advertising ID as described below.
+        The app does not provide login accounts or user profiles. We do not ask for your name or email to use the app.
+        The app creates a <strong>persistent random device identifier</strong> stored in the iOS Keychain (or the Android equivalent
+        secure storage). This identifier is not your name or email. It is used to link subscription restore (RevenueCat), anonymous
+        usage metering, crash diagnostics, and optional feedback on the same device over time.
+    </p>
+    <p>
+        Third-party advertising SDKs may additionally process identifiers such as the Advertising ID (IDFA on iOS) when you consent,
+        as described in section 3.2.
     </p>
 
     <h2>3. Data collection and processing</h2>
@@ -92,6 +100,10 @@
     <p>
         These locally stored data are not accessed by us as the provider and are not transmitted to our own servers.
         We only process personal data if you contact us directly, for example via email.
+    </p>
+    <p>
+        <strong>We do not train machine learning or speech models on your audio, transcripts, synthesized speech, or other session content.</strong>
+        On-device inference uses pre-trained models you download; your recordings and generated outputs are not sent to us or to third-party model hosts for training or model-improvement purposes.
     </p>
 
     <h3>3.2 Advertising via Google AdMob</h3>
@@ -207,12 +219,90 @@
         </a>
     </p>
 
+    <h3>3.5 Usage metering and configuration (Firebase Firestore)</h3>
+    <p>
+        To enforce free-tier usage limits and keep limits consistent across reinstalls on the same device, the app syncs
+        <strong>anonymous usage counters</strong> with Google Firebase Firestore. These counters reflect how much of the free monthly
+        budget you have used (for example speech minutes and text characters). They do <strong>not</strong> include audio recordings,
+        transcripts, synthesized speech, or other content of your sessions.
+    </p>
+    <p><strong>Data processed may include:</strong></p>
+    <ul>
+        <li>The persistent device identifier (see section 2) as the document key</li>
+        <li>Numeric counters per calendar month (speech minutes used, text characters used, including free-tier and total tallies)</li>
+        <li>Timestamps of the last sync</li>
+        <li>Technical write identifiers used to avoid duplicate counting when offline</li>
+    </ul>
+    <p>
+        The app may also read remote configuration from Firestore (for example <code>app_config/limits</code>) to adjust free-tier
+        limits without requiring an app update. This read does not transmit your audio or text content.
+    </p>
+    <p>
+        <strong>Purposes:</strong> Operating the free tier fairly, preventing abuse, and applying published usage limits.
+    </p>
+    <p>
+        <strong>Legal basis:</strong> Legitimate interest in operating the free tier and performing the contract for free-tier use
+        (Art. 6(1)(b) and Art. 6(1)(f) GDPR), where applicable.
+    </p>
+    <p>
+        To request erasure of Firestore documents linked to your device identifier, contact us using the email address in section 12.
+    </p>
+
+    <h3>3.6 In-app feedback (Firebase Firestore)</h3>
+    <p>
+        If you choose to send feedback (for example from Settings or via thumbs up/down on a result screen), the app transmits
+        <strong>only what you type</strong> together with technical metadata. Feedback is private support input and is not published
+        in the app or shown to other users.
+    </p>
+    <p><strong>Data processed may include:</strong></p>
+    <ul>
+        <li>Your comment text (subject to client-side profanity and spam checks)</li>
+        <li>The persistent device identifier (section 2)</li>
+        <li>Feature and model identifiers, app version, platform, and feedback type</li>
+        <li>Timestamps</li>
+    </ul>
+    <p>
+        <strong>No audio files or transcripts are attached</strong> to feedback submissions. Storage location: Firestore
+        <code>feedback</code> collection.
+    </p>
+    <p>
+        <strong>Purposes:</strong> Improving the app, investigating issues, and understanding feature usage.
+    </p>
+    <p>
+        <strong>Legal basis:</strong> Your consent when you submit feedback (Art. 6(1)(a) GDPR) and legitimate interest in product
+        improvement (Art. 6(1)(f) GDPR).
+    </p>
+
+    <h3>3.7 Hugging Face and custom model sources</h3>
+    <p>
+        You may initiate downloads of speech models from <strong>Hugging Face</strong> (<code>huggingface.co</code>) or from
+        <strong>user-configured HTTPS URLs</strong> (custom model catalogs). These downloads are started by you; model files are
+        stored locally on your device.
+    </p>
+    <p><strong>Data that may be processed when you download from these sources includes:</strong></p>
+    <ul>
+        <li>IP address and request metadata (handled by the remote host and its infrastructure)</li>
+        <li>Download URLs and file identifiers you request</li>
+        <li>An optional Hugging Face access token you enter in the app, stored locally on your device for authenticated downloads. This token is not an app login account or user profile.</li>
+    </ul>
+    <p>
+        <strong>No audio</strong> from your sessions is uploaded to Hugging Face or custom catalog hosts through these download flows.
+        You are responsible for complying with each model’s license and the host’s terms of use.
+    </p>
+    <p>
+        <strong>Hugging Face privacy information:</strong><br>
+        <a href="https://huggingface.co/privacy" target="_blank" rel="noopener noreferrer">
+            https://huggingface.co/privacy
+        </a>
+    </p>
+
     <h2>4. Permissions</h2>
     <p>The app may request the following permissions depending on the features you use:</p>
     <ul>
         <li><strong>Internet access:</strong> To fetch resources and serve ads.</li>
         <li><strong>Network status:</strong> To check whether a network connection is available and which type of connection is used.</li>
-        <li><strong>Microphone / media access (optional):</strong> Only if you choose to record or import audio for analysis.</li>
+        <li><strong>Microphone (optional):</strong> Only if you choose to record audio—for example live speech-to-text, voice cloning reference clips, or other on-device speech features. Audio is processed on your device.</li>
+        <li><strong>Local network (optional):</strong> If you configure a model catalog or download URL on your local network (for example a home or office server), the app may connect to that address. This is initiated by you; we do not scan your network.</li>
     </ul>
     <p>
         Permissions can be reviewed and revoked in your device settings at any time.
@@ -234,6 +324,14 @@
             your device connects to GitHub servers and transmits data necessary to deliver the files (see section 3.4).
         </li>
         <li>
+            <strong>Google Firebase (Firestore):</strong> Anonymous usage counters, remote limit configuration reads, and optional feedback
+            are transmitted to Google as described in sections 3.5 and 3.6.
+        </li>
+        <li>
+            <strong>Hugging Face and custom HTTPS catalogs:</strong> When you download models from sources you configure, your device
+            connects to those hosts as described in section 3.7.
+        </li>
+        <li>
             <strong>Legal obligations:</strong> Where we are legally obliged to do so, we may disclose data to authorities or other third parties,
             for example in the context of statutory disclosure obligations.
         </li>
@@ -246,6 +344,7 @@
     </p>
     <ul>
         <li><strong>Data processed for purchase handling:</strong> Store transaction status, product identifiers, entitlement status, and technical receipt-related metadata.</li>
+        <li><strong>Device identifier:</strong> RevenueCat receives the app’s persistent device identifier as <code>appUserID</code> to correlate entitlements and support restore purchases across reinstalls on the same device. This is not a login account.</li>
         <li><strong>Processors/providers:</strong> Apple, Google, and RevenueCat (as subscription infrastructure provider) may process technical purchase metadata to validate purchases and restore entitlements.</li>
         <li><strong>Purpose:</strong> Provide paid features, verify purchases, prevent fraud, and support restore purchases.</li>
         <li><strong>Legal basis:</strong> Art. 6(1)(b) GDPR (contract performance) and, where required, Art. 6(1)(f) GDPR (legitimate interest in secure billing operations).</li>
@@ -269,6 +368,11 @@
         </li>
         <li>
             <strong>Crash and error reports (Crashlytics):</strong> Crashlytics data are stored and processed by Google in accordance with Firebase's data retention and privacy practices. We use the reports for analysis and bug fixing; we do not retain a separate copy of raw crash data beyond what is available in the Firebase console.
+        </li>
+        <li>
+            <strong>Usage metering and feedback (Firestore):</strong> Monthly usage counters and optional feedback are retained in Firebase
+            for as long as needed to operate limits and support. You may request erasure of device-linked Firestore data by contacting us
+            (section 12).
         </li>
         <li>
             <strong>Communication via email:</strong> If you contact us by email, we store your request and the contact details you provide

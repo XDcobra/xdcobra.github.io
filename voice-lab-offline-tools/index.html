@@ -2,212 +2,702 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Voice Lab: STT, TTS &amp; More</title>
-  <meta name="description" content="Voice Lab: STT, TTS &amp; More — an on-device speech toolkit for STT, TTS, VAD, diarization, enhancement, and separation.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Voice Lab — On-device speech toolkit</title>
+  <meta name="description" content="Voice Lab is an offline voice studio on your phone. Eight tools — speech to text, text to speech, translation, punctuation, subtitles, enhancement, voice cloning, and voice activity detection — with no cloud required.">
   <link rel="icon" type="image/x-icon" href="logo.ico">
+  <link rel="apple-touch-icon" href="logo.png">
+  <meta property="og:title" content="Voice Lab — On-device speech toolkit">
+  <meta property="og:description" content="Eight voice tools. Fully offline. On your phone.">
+  <meta property="og:image" content="assets/screenshots/01_hero.png">
   <style>
-    :root{
-      --ink:#0e1222;
-      --ink-soft:#2b3348;
-      --muted:#6a738a;
-      --bg:#f6f7fb;
-      --panel:#ffffff;
-      --accent:#5b5bd6;
-      --accent-2:#35c5f5;
-      --accent-3:#7c3aed;
-      --accent-4:#ff9a3e;
-      --shadow:none;
+    :root {
+      --canvas: #fbfbfd;
+      --surface: #ffffff;
+      --ink: #1d1d1f;
+      --muted: #6e6e73;
+      --hairline: rgba(0, 0, 0, 0.12);
+      --stage: #000000;
+      --nav: rgba(251, 251, 253, 0.78);
+      --focus: #0071e3;
+      --max: 980px;
     }
-    *{box-sizing:border-box}
-    body{
-      font-family:"Sora","Space Grotesk","Avenir Next",sans-serif;
-      margin:0;
-      color:var(--ink);
-      background:var(--bg);
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
     }
-    a{color:var(--ink);text-decoration:none}
-    a.cta{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:#fff;padding:12px 18px;border-radius:999px;font-weight:600}
-    .container{max-width:1040px;margin:0 auto;padding:0 18px}
-    .hero{
-      padding:72px 0 32px;
-      position:relative;
-      background:#0d1020;
-      color:#f3f5ff;
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--canvas);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 17px;
+      line-height: 1.47;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
-    .hero-grid{
-      display:grid;
-      grid-template-columns:1.2fr 0.8fr;
-      gap:28px;
-      align-items:center;
+
+    a {
+      color: var(--ink);
+      text-decoration: none;
     }
-    .badge{
-      display:inline-flex;
-      gap:8px;
-      padding:6px 12px;
-      border-radius:999px;
-      background:rgba(53,197,245,0.18);
-      color:#d9e7ff;
-      font-size:13px;
-      font-weight:600;
+    a:hover { text-decoration: underline; }
+    a:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 3px;
     }
-    h1{font-size:44px;line-height:1.1;margin:14px 0 12px;font-family:"Space Grotesk","Sora",sans-serif}
-    p.lead{font-size:18px;color:var(--muted);margin:0 0 20px}
-    .hero p.lead{color:rgba(233,238,255,0.92)}
-    .chip-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
-    .chip{
-      padding:8px 12px;
-      border-radius:999px;
-      background:rgba(255,255,255,0.1);
-      font-size:13px;
-      font-weight:600;
-      color:#e6edff;
+
+    .skip {
+      position: absolute;
+      left: -999px;
+      top: 8px;
     }
-    .hero-card{
-      background:#14182b;
-      border-radius:20px;
-      padding:22px;
-      position:relative;
-      overflow:hidden;
-      border:1px solid rgba(255,255,255,0.08);
+    .skip:focus {
+      left: 12px;
+      z-index: 20;
+      background: var(--surface);
+      padding: 8px 12px;
     }
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:16px;
-      margin-bottom:10px;
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: var(--nav);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 1px solid var(--hairline);
     }
-    .brand img{
-      width:64px;
-      height:64px;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,0.15);
+    .nav-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 12px 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
     }
-    .banner{
-      width:100%;
-      border-radius:18px;
-      margin-top:20px;
-      border:1px solid rgba(255,255,255,0.06);
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 17px;
+      text-decoration: none;
     }
-    .hero-card h3{margin:0 0 8px;font-size:16px;color:#b8c5e6}
-    .hero-card p{margin:0 0 12px;color:#d6dcf2}
-    section{padding:26px 0}
-    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
-    .card{
-      background:var(--panel);
-      border-radius:16px;
-      padding:18px;
-      border:1px solid rgba(14,18,34,0.08);
-      min-height:160px;
+    .brand img {
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
     }
-    .card h3{margin:0 0 8px;font-size:18px}
-    .card p{margin:0;color:var(--muted);line-height:1.55}
-    .accent-bar{
-      height:6px;border-radius:999px;margin-bottom:12px
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--muted);
     }
-    .accent-1{background:linear-gradient(90deg,var(--accent),#8b8bff)}
-    .accent-2{background:linear-gradient(90deg,var(--accent-2),#8ee8ff)}
-    .accent-3{background:linear-gradient(90deg,var(--accent-3),var(--accent-4))}
-    .split{
-      display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start
+    .nav-links a { color: var(--ink); }
+
+    .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 22px;
     }
-    .note{
-      background:rgba(255,255,255,0.06);
-      border:1px solid rgba(255,255,255,0.08);
-      padding:14px 16px;border-radius:12px;color:var(--ink-soft)
+
+    .hero {
+      text-align: center;
+      padding: 72px 0 0;
     }
-    .hero .note{color:rgba(214,220,242,0.96)}
-    footer{padding:28px 0;color:var(--muted);font-size:14px;text-align:center}
-    @media (max-width:860px){
-      .hero-grid{grid-template-columns:1fr}
-      h1{font-size:36px}
-      .split{grid-template-columns:1fr}
+    .hero-copy {
+      padding: 0 22px;
+    }
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(40px, 7vw, 64px);
+      line-height: 1.05;
+      font-weight: 600;
+      letter-spacing: -0.025em;
+    }
+    .hero .lead {
+      margin: 18px auto 0;
+      max-width: 560px;
+      font-size: 21px;
+      line-height: 1.38;
+      color: var(--muted);
+      font-weight: 400;
+    }
+    .stores {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .stores a {
+      display: inline-flex;
+      line-height: 0;
+    }
+    .stores a:hover { text-decoration: none; opacity: 0.86; }
+    .stores img {
+      height: 40px;
+      width: auto;
+      display: block;
+    }
+    .stores .badge-apple {
+      width: 120px;
+    }
+    .stores .badge-play {
+      width: 134px;
+    }
+
+    .marquee {
+      margin: 48px 0 0;
+    }
+    .marquee-viewport {
+      overflow: hidden;
+      -webkit-mask-image: linear-gradient(to right, transparent, #000 40px, #000 calc(100% - 40px), transparent);
+      mask-image: linear-gradient(to right, transparent, #000 40px, #000 calc(100% - 40px), transparent);
+    }
+    .marquee-track {
+      display: flex;
+      width: max-content;
+      will-change: transform;
+      animation: marquee-drift var(--marquee-duration, 96s) linear infinite;
+    }
+    .marquee-shift {
+      display: flex;
+      width: max-content;
+      transform: translateX(var(--marquee-nudge, 0px));
+      transition: transform 0.7s ease;
+    }
+    .marquee-set {
+      display: flex;
+      gap: 28px;
+      padding-right: 28px;
+    }
+    .marquee-set figure {
+      margin: 0;
+      flex: 0 0 auto;
+      height: clamp(280px, 48vw, 560px);
+      aspect-ratio: 420 / 912;
+    }
+    .marquee-set img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+    .marquee.is-paused .marquee-track,
+    .marquee:has(.marquee-nav:hover) .marquee-track,
+    .marquee:has(.marquee-nav:focus-within) .marquee-track {
+      animation-play-state: paused;
+    }
+    .marquee-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin-top: 14px;
+    }
+    .marquee-nav button {
+      appearance: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      padding: 0;
+      border: 0;
+      border-radius: 22px;
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+    }
+    .marquee-nav button:hover { background: rgba(0, 0, 0, 0.05); }
+    .marquee-nav button:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+    .marquee-nav svg { display: block; }
+
+    @keyframes marquee-drift {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .stage {
+      background: var(--stage);
+      color: #f5f5f7;
+      margin-top: 80px;
+      padding: 80px 22px 0;
+      text-align: center;
+    }
+    .stage h2 {
+      margin: 0;
+      font-size: clamp(32px, 5vw, 48px);
+      line-height: 1.08;
+      font-weight: 600;
+      letter-spacing: -0.022em;
+    }
+    .stage p {
+      margin: 16px auto 0;
+      max-width: 520px;
+      color: #a1a1a6;
+      font-size: 19px;
+    }
+    .stage .shot {
+      margin: 48px auto 0;
+      max-width: 420px;
+    }
+    .stage .shot img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .stage-copy {
+      padding-bottom: 88px;
+    }
+    .privacy-mark {
+      margin: 52px auto 0;
+      max-width: 420px;
+    }
+    .privacy-mark svg {
+      display: block;
+      width: 44px;
+      height: 44px;
+      margin: 0 auto 28px;
+      color: #f5f5f7;
+    }
+    .privacy-mark ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .privacy-mark li {
+      margin: 0;
+      padding: 16px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.14);
+      font-size: 21px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .privacy-mark li:last-child {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .section {
+      padding: 88px 0 40px;
+    }
+    .section h2 {
+      margin: 0 0 12px;
+      font-size: clamp(32px, 5vw, 48px);
+      line-height: 1.08;
+      font-weight: 600;
+      letter-spacing: -0.022em;
+      text-align: center;
+    }
+    .section .intro {
+      margin: 0 auto 40px;
+      max-width: 540px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 19px;
+    }
+
+    .tools {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      border-top: 1px solid var(--hairline);
+    }
+    .tools li {
+      display: grid;
+      grid-template-columns: minmax(0, 220px) 1fr;
+      gap: 24px;
+      padding: 22px 0;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .tools h3 {
+      margin: 0;
+      font-size: 19px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    .tools p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 72px;
+      margin-top: 8px;
+    }
+    .gallery figure {
+      margin: 0;
+      text-align: center;
+    }
+    .gallery img {
+      width: min(100%, 380px);
+      height: auto;
+    }
+    .gallery figcaption {
+      margin-top: 20px;
+    }
+    .gallery figcaption strong {
+      display: block;
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+    .gallery figcaption span {
+      color: var(--muted);
+      font-size: 17px;
+    }
+
+    footer {
+      margin-top: 72px;
+      padding: 36px 22px 48px;
+      border-top: 1px solid var(--hairline);
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+    footer a { color: var(--muted); }
+    footer a:hover { color: var(--ink); }
+
+    @media (max-width: 640px) {
+      .hero { padding-top: 48px; }
+      .hero .lead { font-size: 19px; }
+      .tools li {
+        grid-template-columns: 1fr;
+        gap: 6px;
+        padding: 18px 0;
+      }
+      .section { padding: 64px 0 24px; }
+      .stage { margin-top: 56px; padding-top: 56px; }
+      .stage-copy { padding-bottom: 64px; }
+      .privacy-mark li { font-size: 19px; }
+      .marquee-viewport {
+        -webkit-mask-image: linear-gradient(to right, transparent, #000 16px, #000 calc(100% - 16px), transparent);
+        mask-image: linear-gradient(to right, transparent, #000 16px, #000 calc(100% - 16px), transparent);
+      }
+      .marquee-set { gap: 16px; padding-right: 16px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .marquee-track { animation: none; }
+      .marquee-shift { transition: none; }
+      .marquee-viewport {
+        -webkit-mask-image: none;
+        mask-image: none;
+      }
+      .marquee-pause { display: none; }
     }
   </style>
 </head>
 <body>
-  <header class="hero">
-    <div class="container hero-grid">
-      <div>
-        <span class="badge">Offline-first speech toolkit</span>
-        <div class="brand">
-          <img src="logo.png" alt="Voice Lab logo">
-          <h1>Voice Lab: STT, TTS &amp; More</h1>
-        </div>
-        <p class="lead">Explore on-device speech capabilities with STT, TTS, VAD, diarization, enhancement, and separation—designed to run locally and respect privacy.</p>
-        <a class="cta" href="privacy-policy.html">Privacy Policy</a>
-        <div class="chip-row">
-          <div class="chip">Speech-to-Text</div>
-          <div class="chip">Text-to-Speech</div>
-          <div class="chip">Voice Activity Detection</div>
-          <div class="chip">Diarization</div>
-          <div class="chip">Enhancement</div>
-          <div class="chip">Separation</div>
-        </div>
-      </div>
-      <div class="hero-card">
-        <h3>Why Voice Lab?</h3>
-        <p>Voice Lab is a compact playground for speech pipelines. Load local models, run them on-device, and compare results across tasks—no account required.</p>
-        <div class="note">Built on open source speech tooling. The app highlights how on-device pipelines behave in real-world conditions.</div>
-        <img class="banner" src="banner.png" alt="Voice Lab banner">
+  <a class="skip" href="#main">Skip to content</a>
+  <nav aria-label="Primary">
+    <div class="nav-inner">
+      <a class="brand" href="./">
+        <img src="logo.png" width="28" height="28" alt="">
+        Voice Lab
+      </a>
+      <div class="nav-links">
+        <a href="#tools">Tools</a>
+        <a href="privacy-policy.html">Privacy</a>
+        <a href="#get">Get</a>
       </div>
     </div>
-  </header>
+  </nav>
 
-  <main class="container">
-    <section>
-      <h2>Core modules</h2>
-      <div class="cards">
-        <div class="card">
-          <div class="accent-bar accent-1"></div>
-          <h3>Speech-to-Text</h3>
-          <p>Transcribe speech locally with configurable models and decoding settings.</p>
+  <header class="hero" id="get">
+    <div class="hero-copy">
+      <h1>Eight tools.<br>Fully offline.</h1>
+      <p class="lead">A voice studio on your phone. Speech stays on the device — no cloud, no account.</p>
+      <div class="stores">
+        <a href="https://apps.apple.com/app/id6761100598" aria-label="Download on the App Store">
+          <img class="badge-apple" src="assets/badges/app-store-en.svg" alt="" width="120" height="40">
+        </a>
+        <a href="https://play.google.com/store/apps/details?id=com.xdcobra.voicelab" aria-label="Get it on Google Play">
+          <img class="badge-play" src="assets/badges/google-play-en.png" alt="" width="134" height="40">
+        </a>
+      </div>
+    </div>
+    <section class="marquee" aria-label="Voice Lab screenshots">
+      <div class="marquee-viewport">
+        <div class="marquee-track">
+          <div class="marquee-shift">
+          <div class="marquee-set">
+            <figure>
+              <img src="assets/screenshots/01_hero.png" width="420" height="912" alt="Voice Lab home: eight offline voice tools on one screen">
+            </figure>
+            <figure>
+              <img src="assets/screenshots/02_privacy.png" width="420" height="912" alt="Privacy: audio stays on the device, models run offline, you control export">
+            </figure>
+            <figure>
+              <img src="assets/screenshots/03_models.png" width="420" height="912" alt="Model library: download on-device speech models when you need them">
+            </figure>
+            <figure>
+              <img src="assets/screenshots/04_stt.png" width="420" height="912" alt="Speech to text: speak, then read the transcript on your phone">
+            </figure>
+            <figure>
+              <img src="assets/screenshots/05_tts.png" width="420" height="912" alt="Text to speech: type once and hear it offline">
+            </figure>
+            <figure>
+              <img src="assets/screenshots/06_voice-cloning.png" width="420" height="912" alt="Voice cloning: clone a voice on your device">
+            </figure>
+            <figure>
+              <img src="assets/screenshots/07_cluster-capture.png" width="420" height="912" alt="Capture: record or import audio to process on the device">
+            </figure>
+            <figure>
+              <img src="assets/screenshots/08_cluster-language.png" width="420" height="912" alt="Language: pick the language for on-device speech tools">
+            </figure>
+          </div>
+          </div>
         </div>
-        <div class="card">
-          <div class="accent-bar accent-2"></div>
-          <h3>Text-to-Speech</h3>
-          <p>Generate speech from text with voice presets and offline synthesis.</p>
-        </div>
-        <div class="card">
-          <div class="accent-bar accent-3"></div>
-          <h3>VAD & Diarization</h3>
-          <p>Detect speech segments and identify speaker turns for long recordings.</p>
-        </div>
+      </div>
+      <div class="marquee-nav">
+        <button type="button" class="marquee-prev" aria-label="Previous screenshot">
+          <svg width="12" height="20" viewBox="0 0 12 20" aria-hidden="true"><path d="M10.5 1.5 2 10l8.5 8.5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button type="button" class="marquee-pause" aria-label="Pause screenshot strip" aria-pressed="false">
+          <svg class="icon-pause" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M4 2h2v10H4zm4 0h2v10H8z" fill="currentColor"/></svg>
+          <svg class="icon-play" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" hidden><path d="M4 2.2v9.6L12 7z" fill="currentColor"/></svg>
+        </button>
+        <button type="button" class="marquee-next" aria-label="Next screenshot">
+          <svg width="12" height="20" viewBox="0 0 12 20" aria-hidden="true"><path d="M1.5 1.5 10 10l-8.5 8.5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
     </section>
+  </header>
 
-    <section class="split">
-      <div>
-        <h2>Enhancement & separation</h2>
-        <p class="lead">Clean noisy audio and separate overlapping voices using local models.</p>
-        <div class="cards">
-          <div class="card">
-            <div class="accent-bar accent-1"></div>
-            <h3>Enhancement</h3>
-            <p>Reduce background noise and improve speech clarity on-device.</p>
-          </div>
-          <div class="card">
-            <div class="accent-bar accent-2"></div>
-            <h3>Separation</h3>
-            <p>Split mixed speakers into individual tracks for analysis.</p>
-          </div>
-        </div>
-      </div>
-      <div>
-        <h2>Privacy-first</h2>
-        <p class="lead">Voice Lab keeps processing local by design. You control which files and models are used.</p>
-        <div class="note">
-          Ads (if enabled) are served via Google AdMob and follow regional consent requirements. See the privacy policy for details.
-        </div>
+  <section class="stage stage-copy" aria-labelledby="privacy-heading">
+    <h2 id="privacy-heading">Stays on your device.</h2>
+    <p>Models run offline. You choose what to export or share. Hours of audio even on a modest phone.</p>
+    <div class="privacy-mark">
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <rect x="5" y="11" width="14" height="10" rx="2" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M8 11V8a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      <ul>
+        <li>Audio stays on the phone.</li>
+        <li>Models run offline.</li>
+        <li>You control every export.</li>
+      </ul>
+    </div>
+  </section>
+
+  <main id="main" class="wrap">
+    <section class="section" id="tools" aria-labelledby="tools-heading">
+      <h2 id="tools-heading">One toolkit.</h2>
+      <p class="intro">Eight voice tools, plus a library of 1000+ on-device models you download when you need them.</p>
+      <ul class="tools">
+        <li>
+          <h3>Speech to text</h3>
+          <p>Turn recordings and live audio into text, fully offline.</p>
+        </li>
+        <li>
+          <h3>Text to speech</h3>
+          <p>Hear any text in natural-sounding voices on the device.</p>
+        </li>
+        <li>
+          <h3>Translate</h3>
+          <p>Move spoken meaning across languages without sending a word to the cloud.</p>
+        </li>
+        <li>
+          <h3>Punctuation</h3>
+          <p>Turn run-on speech into sentences you can read and edit.</p>
+        </li>
+        <li>
+          <h3>Subtitles</h3>
+          <p>Timed captions from audio, ready for video, notes, or sharing.</p>
+        </li>
+        <li>
+          <h3>Enhancement</h3>
+          <p>Strip noise from recordings so voices sound clear.</p>
+        </li>
+        <li>
+          <h3>Voice cloning</h3>
+          <p>Generate speech that matches a reference voice you provide.</p>
+        </li>
+        <li>
+          <h3>Voice activity detection</h3>
+          <p>Find where speech starts and stops, and skip the silence.</p>
+        </li>
+      </ul>
+    </section>
+
+    <section class="section" aria-labelledby="gallery-heading">
+      <h2 id="gallery-heading">See it run.</h2>
+      <p class="intro">The same screens as in the App Store — speech in, text and audio out, all on the phone.</p>
+      <div class="gallery">
+        <figure>
+          <img src="assets/screenshots/04_stt.png" width="380" height="826" alt="Speech to text: speak, then read the transcript on your phone">
+          <figcaption>
+            <strong>Speak. Read it here.</strong>
+            <span>Speech to text, with no internet.</span>
+          </figcaption>
+        </figure>
+        <figure>
+          <img src="assets/screenshots/05_tts.png" width="380" height="826" alt="Text to speech: type once and hear it offline">
+          <figcaption>
+            <strong>Type once. Hear it offline.</strong>
+            <span>Text to speech on the device.</span>
+          </figcaption>
+        </figure>
+        <figure>
+          <img src="assets/screenshots/06_voice-cloning.png" width="380" height="826" alt="Voice cloning: clone a voice on your device">
+          <figcaption>
+            <strong>Clone a voice.</strong>
+            <span>On your device, from a reference you choose.</span>
+          </figcaption>
+        </figure>
       </div>
     </section>
   </main>
 
+  <section class="stage" aria-labelledby="library-heading">
+    <h2 id="library-heading">1000+ models.</h2>
+    <p>Download larger, more accurate packs when you need them. Light and dark appearance included.</p>
+    <figure class="shot">
+      <img src="assets/screenshots/03_models.png" width="420" height="912" alt="Model library: download on-device speech models when you need them">
+    </figure>
+  </section>
+
   <footer>
-    <div class="container">Voice Lab: STT, TTS &amp; More • <a href="privacy-policy.html">Privacy Policy</a> • Contact: <a href="mailto:xdcobra11@gmail.com">xdcobra11@gmail.com</a></div>
+    <div class="wrap">
+      Voice Lab: STT, TTS &amp; More
+      · <a href="privacy-policy.html">Privacy Policy</a>
+      · <a href="terms-of-use.html">Terms of Use</a>
+      · <a href="mailto:xdcobra11@gmail.com">xdcobra11@gmail.com</a>
+    </div>
   </footer>
+  <script>
+    (function () {
+      var root = document.querySelector(".marquee");
+      if (!root) return;
+
+      var track = root.querySelector(".marquee-shift") || root.querySelector(".marquee-track");
+      var set = root.querySelector(".marquee-set");
+      var pauseBtn = root.querySelector(".marquee-pause");
+      var prevBtn = root.querySelector(".marquee-prev");
+      var nextBtn = root.querySelector(".marquee-next");
+      var pauseIcon = pauseBtn.querySelector(".icon-pause");
+      var playIcon = pauseBtn.querySelector(".icon-play");
+      var reduceQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+      var pixelsPerSecond = 26;
+      var clone = null;
+      var nudge = 0;
+
+      function reduceMotion() {
+        return reduceQuery.matches;
+      }
+
+      function syncDuration() {
+        var width = set.scrollWidth;
+        if (!width) return;
+        root.style.setProperty("--marquee-duration", (width / pixelsPerSecond) + "s");
+      }
+
+      function syncClone() {
+        if (!clone) {
+          clone = set.cloneNode(true);
+          clone.setAttribute("aria-hidden", "true");
+          clone.querySelectorAll("img").forEach(function (img) {
+            img.alt = "";
+            img.setAttribute("loading", "lazy");
+          });
+          track.appendChild(clone);
+        }
+      }
+
+      function stride() {
+        var fig = set.querySelector("figure");
+        if (!fig) return 0;
+        var gap = parseFloat(getComputedStyle(set).columnGap || getComputedStyle(set).gap) || 0;
+        return fig.getBoundingClientRect().width + gap;
+      }
+
+      function applyNudge() {
+        var loop = set.scrollWidth;
+        if (loop) {
+          nudge = nudge % loop;
+          if (nudge > 0) nudge -= loop;
+          if (nudge <= -loop) nudge += loop;
+        }
+        root.style.setProperty("--marquee-nudge", nudge + "px");
+      }
+
+      function step(direction) {
+        var width = stride();
+        if (!width) return;
+        nudge -= direction * width;
+        applyNudge();
+      }
+
+      function setPaused(paused) {
+        root.classList.toggle("is-paused", paused);
+        pauseBtn.setAttribute("aria-pressed", paused ? "true" : "false");
+        pauseBtn.setAttribute("aria-label", paused ? "Play screenshot strip" : "Pause screenshot strip");
+        pauseIcon.hidden = paused;
+        playIcon.hidden = !paused;
+      }
+
+      prevBtn.addEventListener("click", function () { step(-1); });
+      nextBtn.addEventListener("click", function () { step(1); });
+      root.addEventListener("keydown", function (event) {
+        if (event.key === "ArrowLeft") { event.preventDefault(); step(-1); }
+        if (event.key === "ArrowRight") { event.preventDefault(); step(1); }
+      });
+      pauseBtn.addEventListener("click", function () {
+        setPaused(!root.classList.contains("is-paused"));
+      });
+      document.addEventListener("visibilitychange", function () {
+        if (document.hidden) root.classList.add("is-paused");
+        else if (pauseBtn.getAttribute("aria-pressed") !== "true") root.classList.remove("is-paused");
+      });
+      reduceQuery.addEventListener("change", function () {
+        syncClone();
+        syncDuration();
+        if (reduceMotion()) setPaused(true);
+      });
+      window.addEventListener("resize", function () {
+        syncDuration();
+        applyNudge();
+      });
+
+      syncClone();
+      if (reduceMotion()) setPaused(true);
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(syncDuration);
+      }
+      var images = set.querySelectorAll("img");
+      var pending = images.length;
+      function onReady() {
+        pending -= 1;
+        if (pending <= 0) syncDuration();
+      }
+      images.forEach(function (img) {
+        if (img.complete) onReady();
+        else {
+          img.addEventListener("load", onReady);
+          img.addEventListener("error", onReady);
+        }
+      });
+      syncDuration();
+    })();
+  </script>
 </body>
 </html>
